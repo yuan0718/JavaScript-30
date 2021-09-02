@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Understanding JavaScript's Capture</title>
+	</head>
+	<body class="bod">
+		<div class="one">
+			<div class="two">
+				<div class="three"></div>
+			</div>
+		</div>
+
+		<style>
+			html {
+				box-sizing: border-box;
+			}
+
+			*,
+			*:before,
+			*:after {
+				box-sizing: inherit;
+			}
+
+			div {
+				width: 100%;
+				padding: 100px;
+			}
+
+			.one {
+				background: thistle;
+			}
+
+			.two {
+				background: mistyrose;
+			}
+
+			.three {
+				background: coral;
+			}
+		</style>
+
+		<script>
+			const divs = document.querySelectorAll('div');
+			const log = function (e) {
+        // stopPropagation 阻止事件傳遞
+        // e.stopPropagation();
+				console.log(this);
+			};
+			divs.forEach((div) =>
+				div.addEventListener('click', log, {
+          // true 改為 事件捕獲
+					capture: false,
+          // 控制函數被調用次數(1次)
+          // once: true
+				}),
+			);
+      // 事件冒泡 或 捕獲, 是指事件在元素上被觸發的順序. 事件本身並不會被傳遞
+      // 事件的執行, 必須要有相應的動作來觸發, 觸發的動作不會傳遞
+      // 事件默認情況下 是 冒泡傳遞(由內而外)
+		</script>
+	</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>HTML5 Canvas</title>
+	</head>
+	<body>
+		<canvas id="draw" width="800" height="800"></canvas>
+		<script>
+			const canvas = document.querySelector('#draw');
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+			const ctx = canvas.getContext('2d');
+			console.log(ctx);
+			// canvas 基本設置
+			ctx.strokeStyle = '#BADA55';
+			ctx.lineJoin = 'round';
+			ctx.lineCap = 'round';
+			ctx.lineWidth = 100;
+      // ctx.globalCompositeOperation = 'multiply';
+			// 開關變量
+			let idDrawing = false;
+			// 起始點
+			let lastX = 0;
+			let lastY = 0;
+			// 顏色
+			let hsl = 0;
+      // 控制線大小
+      let direction = true;
+			// 控制畫線
+			const draw = function (e) {
+				if (!idDrawing) return;
+				ctx.strokeStyle = `hsl(${hsl},100%,50%)`;
+				ctx.beginPath();
+				ctx.moveTo(lastX, lastY);
+				ctx.lineTo(e.offsetX, e.offsetY);
+				[lastX, lastY] = [e.offsetX, e.offsetY];
+				ctx.stroke();
+				hsl++;
+				if (hsl > 359) {
+					hsl = 0;
+				}
+        if(ctx.lineWidth >= 100 || ctx.lineWidth <= 1){
+          direction = !direction
+        }
+				if (direction) {
+					ctx.lineWidth++;
+				} else {
+					ctx.lineWidth--;
+				}
+			};
+			canvas.addEventListener('mousemove', draw);
+			canvas.addEventListener('mousedown', (e) => {
+				idDrawing = true;
+				[lastX, lastY] = [e.offsetX, e.offsetY];
+			});
+			canvas.addEventListener('mouseup', (e) => (idDrawing = false));
+			canvas.addEventListener('mouseout', (e) => (idDrawing = false));
+		</script>
+
+		<style>
+			html,
+			body {
+				margin: 0;
+			}
+		</style>
+	</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Key Detection</title>
+		<script
+			type="text/javascript"
+			src="https://www.cornify.com/js/cornify.js"
+		></script>
+	</head>
+	<body>
+		<script>
+			const secretCode = 'arvin';
+			const pressed = [];
+			window.addEventListener('keyup', (e) => {
+				// console.log(e.key);
+				pressed.push(e.key);
+				/**
+				 *  (-pressed.length-1) 取反 從最後一個開始算
+				 */
+				pressed.splice(-pressed.length - 1, pressed.length - secretCode.length);
+				// join 轉換為字符串
+        // includes 搜索匹配
+				if (pressed.join('').includes(secretCode)) {
+					cornify_add();
+				}
+			});
+		</script>
+	</body>
+</html>

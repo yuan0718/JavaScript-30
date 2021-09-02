@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Click and Drag</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<div class="items">
+			<div class="item item1">01</div>
+			<div class="item item2">02</div>
+			<div class="item item3">03</div>
+			<div class="item item4">04</div>
+			<div class="item item5">05</div>
+			<div class="item item6">06</div>
+			<div class="item item7">07</div>
+			<div class="item item8">08</div>
+			<div class="item item9">09</div>
+			<div class="item item10">10</div>
+			<div class="item item11">11</div>
+			<div class="item item12">12</div>
+			<div class="item item13">13</div>
+			<div class="item item14">14</div>
+			<div class="item item15">15</div>
+			<div class="item item16">16</div>
+			<div class="item item17">17</div>
+			<div class="item item18">18</div>
+			<div class="item item19">19</div>
+			<div class="item item20">20</div>
+			<div class="item item21">21</div>
+			<div class="item item22">22</div>
+			<div class="item item23">23</div>
+			<div class="item item24">24</div>
+			<div class="item item25">25</div>
+		</div>
+
+		<script>
+			const slider = document.querySelector('.items');
+   /**
+    * startX 點擊起始點
+    * isDown 控制滑鼠是否點擊
+    * scrollLeft 元素的 scrollLeft 值 
+    */      
+			let startX;
+			let isDown = false;
+			let scrollLeft;
+			slider.addEventListener('mousedown', (e) => {
+				isDown = true;
+				slider.classList.add('active');
+        // 起點 = 點擊點 -節點的左邊界偏移的像素值
+				startX = e.pageX - slider.offsetLeft;
+				console.log(startX);
+				scrollLeft = slider.scrollLeft;
+			});
+			slider.addEventListener('mouseup', () => {
+				isDown = false;
+				slider.classList.remove('active');
+			});
+			slider.addEventListener('mouseleave', () => {
+				isDown = false;
+				slider.classList.remove('active');
+			});
+			slider.addEventListener('mousemove', (e) => {
+				if (!isDown) return;
+				// 終點 = 結束點 - 節點的左邊界偏移的像素值
+				const x = e.pageX - slider.offsetLeft;
+        // 移動距離 = 結束點 - 起點 * 倍率
+				const walk = (x - startX) * 3;
+        // 滾動控制   scrollLeft 設置元素滾動條到元素左邊的距離
+				slider.scrollLeft = scrollLeft - walk;
+			});
+		</script>
+	</body>
+</html>
